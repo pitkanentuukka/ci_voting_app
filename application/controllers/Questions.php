@@ -13,6 +13,13 @@ class Questions extends CI_Controller {
 	public function index() 
 	{
 		$data['questions'] = $this->questions_model->get_questions();
+		
+		$data['title'] = "Questions";
+		$data['h1'] = "Questions";
+		$this->load->view('templates/header', $data);
+		$this->load->view('questions/home', $data);
+		$this->load->view('templates/footer', $data);
+
 	}
 
 

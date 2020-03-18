@@ -12,7 +12,13 @@ class Party extends CI_Controller {
 
 	public function index() 
 	{
-		$data['partiess'] = $this->party_model->get_parties();
+		$data['parties'] = $this->party_model->get_parties();
+		$data['title'] = "Parties and links";
+		$data['h1'] = "parties";
+		$this->load->view('templates/header', $data);
+		$this->load->view('party/home', $data);
+		$this->load->view('templates/footer', $data);
+	
 	}
 
 
