@@ -14,5 +14,11 @@ class Questions_model extends CI_Model {
 		return $query->result_array();
 	}
 
-
+	public function add_question() 
+	{
+		$data = array(
+			'question' => $this->input->post('question')
+			);
+		return $this->db->insert('question', $data);
+	}
 }

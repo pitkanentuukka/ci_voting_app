@@ -30,4 +30,26 @@ class Questions extends CI_Controller {
 		$this->load->view('templates/footer', $data);
 
 	}
+	
+	public function add()
+	{
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+		
+		$data['title'] = "Add a question";
+		$data['h1'] = "Add a question";
+		$this->form_validation->set_rules('question', 'question', 'required');
+		
+		if ($this->form_validation->run() === FALSE)
+		{
+			$this->load->view('templates/header', $data);
+			$this->load->view('questions/add', $data);
+			$this->load->view('templates/footer');
+		} else {
+			$this->questions_model->add_question();
+			$data['title'] = "question added";
+			$this->load->view('templates/header', $data);
+			$this->load->view('questions/success', $data);
+		}
+	}
 }
