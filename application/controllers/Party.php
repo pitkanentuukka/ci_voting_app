@@ -15,7 +15,18 @@ class Party extends CI_Controller {
 				$this->load->helper('form');
 		$this->load->library('form_validation');
 
-		$data['parties'] = $this->party_model->get_parties();
+		$parties = $this->party_model->get_parties();
+		$data['parties'] = $parties;
+		$data['linkurl'] =  base_url() . "candidate/add/";
+
+	/*	foreach ($parties as $party) 
+		{	
+			//$party['wholelink'] = $this->assembleLink($party['link']);
+			$data['parties']['wholelink'] =  $this->assembleLink($party['link']);
+		}
+		//var_dump($data);
+		//$data['parties'] = $parties;
+		*/
 		$data['title'] = "Parties and links";
 		$data['h1'] = "parties";
 		$this->load->view('templates/header', $data);
@@ -64,9 +75,15 @@ class Party extends CI_Controller {
 			$partydata = $this->party_model->getById($insert_id);
 			
 			$data['partyname'] = $partydata->name;
-			$data['link'] = $partydata->link;
+			//$whole_link = base_url() . "candidate/add/" . $partydata->link;
+			$data['link'] = $this->assembleLink($partydata->link);
 			$this->load->view('templates/header', $data);
 			$this->load->view('party/success', $data);
 		}
 	}
+	protected function assembleLink($link)
+	{
+		return base_url() . "candidate/add/" . $link;
+	}
+		
 }
