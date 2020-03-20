@@ -12,11 +12,16 @@ class District extends CI_Controller {
 
 	public function index() 
 	{
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+	
 		$data['districts'] = $this->district_model->get_districts();
 		$data['title'] = "Voting districts";
 		$data['h1'] = "Voting Districts";
 		$this->load->view('templates/header', $data);
 		$this->load->view('district/home', $data);
+		$this->load->view('district/add', $data);
+
 		$this->load->view('templates/footer', $data);
 	
 	}

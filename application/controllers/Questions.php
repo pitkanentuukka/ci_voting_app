@@ -12,12 +12,17 @@ class Questions extends CI_Controller {
 
 	public function index() 
 	{
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+
 		$data['questions'] = $this->questions_model->get_questions();
 		
 		$data['title'] = "Questions";
 		$data['h1'] = "Questions";
 		$this->load->view('templates/header', $data);
 		$this->load->view('questions/home', $data);
+		$this->load->view('questions/add', $data);
+
 		$this->load->view('templates/footer', $data);
 
 	}
@@ -31,7 +36,7 @@ class Questions extends CI_Controller {
 		$data['questions'] = $this->questions_model->get_questions();
 
 		$data['title'] = ucfirst($page);
-		$data['h1'] = "this is a headline";
+		$data['h1'] = "Questions:";
 		$this->load->view('templates/header', $data);
 		$this->load->view('questions/'.$page, $data);
 		$this->load->view('templates/footer', $data);

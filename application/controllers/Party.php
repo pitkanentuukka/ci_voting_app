@@ -12,11 +12,17 @@ class Party extends CI_Controller {
 
 	public function index() 
 	{
+				$this->load->helper('form');
+		$this->load->library('form_validation');
+
 		$data['parties'] = $this->party_model->get_parties();
 		$data['title'] = "Parties and links";
 		$data['h1'] = "parties";
 		$this->load->view('templates/header', $data);
 		$this->load->view('party/home', $data);
+		
+		$this->load->view('party/add');
+
 		$this->load->view('templates/footer', $data);
 	
 	}
