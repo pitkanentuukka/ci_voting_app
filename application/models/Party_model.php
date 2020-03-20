@@ -25,14 +25,6 @@ class Party_model extends CI_Model {
 	}
 	public function getById($id)
 	{
-		//$query = $this->db->get_where('party', array('id', $id));
-		/*$query = $this->db->get('party');
-		$this->db->where('id', $id);
-	
-		var_dump($query);*/
-		
-		//$query = $this->db->query('select * from party where id = $id');
-		//$query = $this->db->get_where('party', array('id', $id));
 		$this->db->select('*');
 		$this->db->from('party');
 		$this->db->where('id', $id);
@@ -46,6 +38,18 @@ class Party_model extends CI_Model {
 	private function generateLink()
 	{
 		return sha1(uniqid());
+	}
+	
+	public function getByLink($link)
+	{
+		$this->db->select('*');
+		$this->db->from('party');
+		$this->db->where('link', $link);
+		
+		$query = $this->db->get();
+		
+		return $query->row();
 		
 	}
+
 }
