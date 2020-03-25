@@ -19,14 +19,7 @@ class Party extends CI_Controller {
 		$data['parties'] = $parties;
 		$data['linkurl'] =  base_url() . "candidate/add/";
 
-	/*	foreach ($parties as $party) 
-		{	
-			//$party['wholelink'] = $this->assembleLink($party['link']);
-			$data['parties']['wholelink'] =  $this->assembleLink($party['link']);
-		}
-		//var_dump($data);
-		//$data['parties'] = $parties;
-		*/
+
 		$data['title'] = "Parties and links";
 		$data['h1'] = "parties";
 		$this->load->view('templates/header', $data);

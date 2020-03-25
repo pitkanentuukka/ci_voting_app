@@ -64,4 +64,9 @@ class Questions extends CI_Controller {
 			$this->load->view('questions/success', $data);
 		}
 	}
+	public function AddAjax() 
+	{
+		$this->questions_model->add_question();
+		echo $this->input->post('question');
+	}
 }
