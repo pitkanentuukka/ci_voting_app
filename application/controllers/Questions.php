@@ -16,7 +16,6 @@ class Questions extends CI_Controller {
 		$this->load->library('form_validation');
 
 		$data['questions'] = $this->questions_model->get_questions();
-		
 		$data['title'] = "Questions";
 		$data['h1'] = "Questions";
 		$this->load->view('templates/header', $data);
@@ -66,7 +65,15 @@ class Questions extends CI_Controller {
 	}
 	public function AddAjax() 
 	{
-		$this->questions_model->add_question();
-		echo $this->input->post('question');
+		$id = $this->questions_model->add_question();
+		//echo $this->input->post('question');
+		$response = array( 'id' => $id,
+		'question' => $this->input->post('question'));
+		echo json_encode($response);
+		
+	}
+	public function removeAjax($id) {
+		$this->questions_model->remove_question($id);
+		echo "question removed!";
 	}
 }

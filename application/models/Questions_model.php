@@ -19,6 +19,16 @@ class Questions_model extends CI_Model {
 		$data = array(
 			'question' => $this->input->post('question')
 			);
-		return $this->db->insert('question', $data);
+		 $this->db->insert('question', $data);
+		 return $this->db->insert_id();
 	}
+	
+	public function remove_question($id)
+	{
+		//$id = $this->input->post('id');
+		$this->db->where('id', $id);
+		$this->db->delete('question');
+		
+	}
+			
 }
