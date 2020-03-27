@@ -38,7 +38,12 @@ $(document).ready(function() {
 				"<p class='question' id=" + addedQuestion.id + ">" + 
 				"<span id=" + addedQuestion.id + ">" + addedQuestion.question + "</span>" +
 				" <a href='#' class='edit' id=" + addedQuestion.id + ">edit</a>" +
-				" <a href='#' class='remove' id=" + addedQuestion.id + ">remove</a> </p></div>"				
+				" <a href='#' class='remove' id=" + addedQuestion.id + ">remove</a> </p></div>" +
+				" <span class='editquestion' id=" + addedQuestion.id + " style='display:none'>" + 
+				"<input type='text' name='question' id=" + addedQuestion.id + ">" +
+				"<input type='button' name='cancel' value='cancel' id=" + addedQuestion.id + ">" +
+				"<input type='submit' name='edit' value='edit' id=" + addedQuestion.id + ">" + "</span>"
+
 				$("#questionList").append(newQuestionHTML);
 			}
 		});				
@@ -64,7 +69,6 @@ $(document).ready(function() {
 		var question = $(this).siblings("span").html();
 		$(this).siblings(".editquestion").css('display', 'block');
 		$(this).siblings(".editquestion").children("input:text").val(question);
-		//$(this).parent("p").hide();
 		
 
 	});
@@ -72,7 +76,6 @@ $(document).ready(function() {
 		$(this).parents("span").css('display', 'none');
 	});
 	$("#questionList").on('click', "input:submit", function() {
-		//$(this).parents("span").css('display', 'none');
 		var id = $(this).attr('id');
 		var question = $(this).siblings(':text').val();
 		
