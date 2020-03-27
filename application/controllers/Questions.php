@@ -76,4 +76,8 @@ class Questions extends CI_Controller {
 		$this->questions_model->remove_question($id);
 		echo "question removed!";
 	}
+	public function updateAjax() 
+	{
+		$this->questions_model->update();
+	}
 }

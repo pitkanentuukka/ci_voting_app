@@ -25,10 +25,14 @@ class Questions_model extends CI_Model {
 	
 	public function remove_question($id)
 	{
-		//$id = $this->input->post('id');
 		$this->db->where('id', $id);
 		$this->db->delete('question');
 		
 	}
-			
+	public function update()
+	{
+		$this->db->set('question', $this->input->post('question'));
+		$this->db->where('id', $this->input->post('id'));
+		$this->db->update('question');
+	}	
 }
