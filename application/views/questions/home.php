@@ -1,4 +1,4 @@
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <div class="container">
 	<div id="questionList">
 	<?php foreach ($questions as $question): ?> 
@@ -25,28 +25,30 @@
 
 
 	<?php endforeach ?>
-	</div>
-
 </div>
-
-<form class="form-inline">
+<form class="form-inline" id="addQuestionForm">
 <div class="form-group mr-2">
 	<label for "question" >Question</label>
 	
-	<input type="text" name="question" id="question" class="form-control" placeholder="add a question">
+	<input type="text" name="question" id="question" class="form-control" placeholder="add a question" required>
 </div>
 <div class="form-group mr-2">
 
 	<input type="submit" class='btn btn-success' name="submit" value="add question" id="addQuestion">
 	
 </div>
-</form>	
-	
-</div>
 </form>
 
-
-
+</div>
+	
+<script>$("#addQuestionForm").validate({
+	rules: {
+		question: {
+			required:true,
+			minlength: 3
+		}
+	}
+	});</script>
 
 <script>
 	 
@@ -134,8 +136,6 @@ $(document).ready(function() {
 	$("#questionList").on('click', "input:submit", function() {
 		var id = $(this).attr('id');
 		var question = $(this).siblings(':text').val();
-		
-		
 		
 		$.ajax({
 			url: "<?php echo base_url(); ?>index.php/questions/updateAjax/",
