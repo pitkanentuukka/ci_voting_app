@@ -1,23 +1,53 @@
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>css/voting_machine.css">
-<div id="questionList">
-<?php foreach ($questions as $question): ?> 
-<div class='questiondiv' id="<?php echo $question['id']; ?>">
-<p class="question" id="<?php echo $question['id']; ?>">
-<span class='questionspan' id="<?php echo $question['id']; ?>">
-<?php echo $question['question']; ?>
-</span>
-<a href="#" class='edit' id=<?php echo $question['id']?>>  edit</a>
-<a href="#" class='remove' id=<?php echo $question['id']?>>  remove</a> 
-<span class="editquestion" id=<?php echo $question['id']?> style='display:none'>
-<input type='text' name='question' id=<?php echo $question['id']?>>
-<input type='button' name='cancel' value='cancel' id=<?php echo $question['id']?>>
-<input type='submit' name='edit' value='edit' id=<?php echo $question['id']?>>
-</span>
-</p>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<div class="container">
+	<div id="questionList">
+	<?php foreach ($questions as $question): ?> 
+
+		<div class="panel panel-default panel-list">
+			<div class="row">
+				<div class='questiondiv' id="<?php echo $question['id']; ?>">
+					<p class="question" id="<?php echo $question['id']; ?>">
+						<span class='questionspan' id="<?php echo $question['id']; ?>">
+							<?php echo $question['question']; ?>
+						</span>
+						<a href="#" class='edit' id=<?php echo $question['id']?>>  edit</a>
+						<a href="#" class='remove' id=<?php echo $question['id']?>>  remove</a> 
+						<span class="editquestion" id=<?php echo $question['id']?> style='display:none'>
+							<input type='text' name='question' id=<?php echo $question['id']?>>
+							<input type='button' class='btn btn-primary' name='cancel' value='cancel' id=<?php echo $question['id']?>>
+							<input type='submit' class='btn btn-success' name='edit' value='edit' id=<?php echo $question['id']?>>
+						</span>
+					</p>
+				</div>
+			</div>
+		</div>
+
+
+
+	<?php endforeach ?>
+	</div>
+
 </div>
-<?php endforeach ?>
+
+<form class="form-inline">
+<div class="form-group mr-2">
+	<label for "question" >Question</label>
+	
+	<input type="text" name="question" id="question" class="form-control" placeholder="add a question">
 </div>
+<div class="form-group mr-2">
+
+	<input type="submit" class='btn btn-success' name="submit" value="add question" id="addQuestion">
+	
+</div>
+</form>	
+	
+</div>
+</form>
+
+
+
+
 <script>
 	 
 $(document).ready(function() {
@@ -41,10 +71,36 @@ $(document).ready(function() {
 				" <a href='#' class='remove' id=" + addedQuestion.id + ">remove</a> </p></div>" +
 				" <span class='editquestion' id=" + addedQuestion.id + " style='display:none'>" + 
 				"<input type='text' name='question' id=" + addedQuestion.id + ">" +
-				"<input type='button' name='cancel' value='cancel' id=" + addedQuestion.id + ">" +
-				"<input type='submit' name='edit' value='edit' id=" + addedQuestion.id + ">" + "</span>"
+				"<input type='button' class='btn btn-primary' name='cancel' value='cancel' id=" + addedQuestion.id + ">" +
+				"<input type='submit' class='btn btn-success' name='edit' value='edit' id=" + addedQuestion.id + ">" + "</span>"
 
 				$("#questionList").append(newQuestionHTML);
+				
+			/*	var $cloneDiv = $("#questionList").children().last().clone(true);
+				console.log($cloneDiv);
+				$cloneDiv.children().attr('id', addedQuestion.id);
+				$cloneDiv.attr('id', addedQuestion.id);
+				$cloneDiv.children(".questionspan #"+addedQuestion.id).text(addedQuestion.question);
+				console.log($cloneDiv);
+
+				$("#questionList").append($cloneDiv);
+				*/				
+				
+				/*var newDiv = $("#questionList").append("div");
+				newDiv.addClass('questiondiv').attr('id', addedQuestion.id);
+				var newP = newDiv.append("p");
+				newP.addClass('question').attr('id',addedQuestion.id);
+					
+					
+				newP.append("span").attr('id', addedQuestion.id).text(addedQuestion.question);
+				newP.append("a").addClass('edit').attr('id', addedQuestion.id).attr('href', '#').text('edit');
+				newP.append("a").addClass('remove').attr('id', addedQuestion.id).attr('href', '#').text('remove');
+				var editSpan = newDiv.append("span").addClass('editquestion').attr('id', addedQuestion.id).css('display:none');
+				
+				editSpan.append("input").attr('type','text').attr('name', 'question').attr('id', addedQuestion.id);
+				editSpan.append("input").attr('type', 'button').attr('name', 'cancel').attr('value', 'cancel').attr('id', addedQuestion.id);
+				editSpan.append("input").attr('type', 'button').attr('name', 'edit').attr('value', 'edit').attr('id', addedQuestion.id);
+				*/
 			}
 		});				
 	 });
@@ -78,6 +134,7 @@ $(document).ready(function() {
 	$("#questionList").on('click', "input:submit", function() {
 		var id = $(this).attr('id');
 		var question = $(this).siblings(':text').val();
+		
 		
 		
 		$.ajax({
