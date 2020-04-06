@@ -7,20 +7,24 @@ class Questions extends CI_Controller {
 
 		parent::__construct();
 		$this->load->model('questions_model');
-		$this->load->helper('url_helper');
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+
 	}
 
 	public function index() 
 	{
 		$this->load->helper('form');
 		$this->load->library('form_validation');
+		
+		$this->output->parse_exec_vars = FALSE;
 
 		$data['questions'] = $this->questions_model->get_questions();
 		$data['title'] = "Questions";
 		$data['h1'] = "Questions";
 		$this->load->view('templates/header', $data);
 		$this->load->view('questions/home', $data);
-		$this->load->view('questions/add', $data);
+//		$this->load->view('questions/add', $data);
 
 		$this->load->view('templates/footer', $data);
 
@@ -65,11 +69,16 @@ class Questions extends CI_Controller {
 	}
 	public function AddAjax() 
 	{
-		$id = $this->questions_model->add_question();
-		//echo $this->input->post('question');
-		$response = array( 'id' => $id,
-		'question' => $this->input->post('question'));
-		echo json_encode($response);
+		$this->form_validation->set_rules('question', 'question', 'required');
+		
+		if ($this->form_validation->run() === FALSE) {
+			echo json_encode(validation_errors());
+		} else {
+			$id = $this->questions_model->add_question();
+			$response = array( 'id' => $id,
+			'question' => $this->input->post('question'));
+			echo json_encode($response);
+		}
 		
 	}
 	public function removeAjax($id) {
