@@ -2,28 +2,24 @@
 <div class="container">
 	<div id="questionList">
 	<?php foreach ($questions as $question): ?> 
-
 		<div class="panel panel-default panel-list">
 			<div class="row">
-				<div class='questiondiv' id="<?php echo $question['id']; ?>">
-					<p class="question" id="<?php echo $question['id']; ?>">
-						<span class='questionspan' id="<?php echo $question['id']; ?>">
+				<div class='questionDiv' id="<?php echo $question['id']; ?>">
+					<p class="question">
+						<span class='questionspan'>
 							<?php echo $question['question']; ?>
 						</span>
-						<a href="#" class='edit' id=<?php echo $question['id']?>>  edit</a>
-						<a href="#" class='remove' id=<?php echo $question['id']?>>  remove</a> 
-						<span class="editquestion" id=<?php echo $question['id']?> style='display:none'>
-							<input type='text' name='question' id=<?php echo $question['id']?>>
-							<input type='button' class='btn btn-primary' name='cancel' value='cancel' id=<?php echo $question['id']?>>
-							<input type='submit' class='btn btn-success' name='edit' value='edit' id=<?php echo $question['id']?>>
-						</span>
+						<a href="#" class='edit'>  edit</a>
+						<a href="#" class='remove'>  remove</a> 
+						<form class='form-inline d-none'>
+							<input type='text' name='question' value='<?php echo $question['question']; ?>' />
+							<input type='button' class='btn btn-primary' name='cancel' value='cancel' />
+							<input type='submit' class='btn btn-success' name='edit' value='edit' />
+						</form>
 					</p>
 				</div>
 			</div>
 		</div>
-
-
-
 	<?php endforeach ?>
 </div>
 <form class="form-inline" id="addQuestionForm">
@@ -65,8 +61,9 @@ $(document).ready(function() {
 		}
 	});
 		
-	$("#questionList").on('click', ".remove", function() {
-		var id = $(this).attr('id');
+	$("#questionList").on('click', ".remove", function(event) {
+		event.preventDefault();
+		var id = $(this).parents('div .questionDiv').attr('id');
 		$.ajax({
 			url: "<?php echo base_url(); ?>index.php/questions/removeAjax/" + id,
 			type: 'GET',
@@ -75,24 +72,33 @@ $(document).ready(function() {
 				alert("something went wrong");
 			},
 			success: function(response) {
-				$(this).parent('p').parent('div').remove();
+				$(this).parents('div .questionDiv').remove();
 			},	
 		});
 	});
 	
 	$("#questionList").on('click', ".edit", function() {
-		var id = $(this).attr('id');
+		var id = $(this).parent("div .questionDiv").attr('id');
 		var question = $(this).siblings("span").html();
-		$(this).siblings(".editquestion").css('display', 'block');
-		$(this).siblings(".editquestion").children("input:text").val(question);
+		console.log(question);
+		var editParent = $(this).parents('p');
+		//console.log(editParent.find('form'));
+		editParent.find('form').removeClass('d-none');
+		//$(this).siblings('.form-inline').removeClass('d-none');
+		//$(this).siblings('.form-inline').children('input:text').val(question);
 		
-
+		//these two seem to work
+		$(this).parents('div .questionDiv').find('form').removeClass('d-none');
+		//$(this).parents('div .questionDiv').find('input:text').val(question);
+		
 	});
 	$("#questionList").on('click', "input:button", function() {
-		$(this).parents("span").css('display', 'none');
+		$(this).parents("form").addClass("d-none");
 	});
-	$("#questionList").on('click', "input:submit", function() {
-		var id = $(this).attr('id');
+	$("#questionList").on('click', "input:submit", function(event) {
+		event.preventDefault();
+		var id = $(this).parents('div .questionDiv').attr('id');
+		
 		var question = $(this).siblings(':text').val();
 		
 		$.ajax({
@@ -104,8 +110,8 @@ $(document).ready(function() {
 				alert("something went wrong");
 			},
 			success: function(response) {
-				$(this).parent('span').css('display', 'none');
 				$('#'+id.toString()+ ' .questionspan').text(question);
+				$(this).parent('form').addClass('d-none');
 			},	
 		});
 	});
@@ -124,7 +130,7 @@ function sendQuestion() {
 		},
 		success: function(response) {
 			addedQuestion = JSON.parse(response);
-			var newQuestionHTML = "<div class='questiondiv' id=" + addedQuestion.id + ">" + 
+			var newQuestionHTML = "<div class='questionDiv' id=" + addedQuestion.id + ">" + 
 			"<p class='question' id=" + addedQuestion.id + ">" + 
 			"<span id=" + addedQuestion.id + ">" + addedQuestion.question + "</span>" +
 			" <a href='#' class='edit' id=" + addedQuestion.id + ">edit</a>" +

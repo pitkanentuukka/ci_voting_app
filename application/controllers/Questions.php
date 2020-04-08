@@ -82,8 +82,13 @@ class Questions extends CI_Controller {
 		
 	}
 	public function removeAjax($id) {
-		$this->questions_model->remove_question($id);
-		echo "question removed!";
+		if (isset($id) && !empty($id)) {
+			$this->questions_model->remove_question($id);
+			echo json_encode("question removed!");
+		} else {
+			$this->output->set_status_header(400);
+			echo json_encode("missing id!");
+		}
 	}
 	public function updateAjax() 
 	{
