@@ -82,14 +82,8 @@ $(document).ready(function() {
 		var question = $(this).siblings("span").html();
 		console.log(question);
 		var editParent = $(this).parents('p');
-		//console.log(editParent.find('form'));
 		editParent.find('form').removeClass('d-none');
-		//$(this).siblings('.form-inline').removeClass('d-none');
-		//$(this).siblings('.form-inline').children('input:text').val(question);
-		
-		//these two seem to work
 		$(this).parents('div .questionDiv').find('form').removeClass('d-none');
-		//$(this).parents('div .questionDiv').find('input:text').val(question);
 		
 	});
 	$("#questionList").on('click', "input:button", function() {
@@ -131,40 +125,17 @@ function sendQuestion() {
 		success: function(response) {
 			addedQuestion = JSON.parse(response);
 			var newQuestionHTML = "<div class='questionDiv' id=" + addedQuestion.id + ">" + 
-			"<p class='question' id=" + addedQuestion.id + ">" + 
-			"<span id=" + addedQuestion.id + ">" + addedQuestion.question + "</span>" +
-			" <a href='#' class='edit' id=" + addedQuestion.id + ">edit</a>" +
-			" <a href='#' class='remove' id=" + addedQuestion.id + ">remove</a> </p></div>" +
-			" <span class='editquestion' id=" + addedQuestion.id + " style='display:none'>" + 
-			"<input type='text' name='question' id=" + addedQuestion.id + ">" +
-			"<input type='button' class='btn btn-primary' name='cancel' value='cancel' id=" + addedQuestion.id + ">" +
-			"<input type='submit' class='btn btn-success' name='edit' value='edit' id=" + addedQuestion.id + ">" + "</span>"
+			"<p class='question'>" + 
+			"<span>" + addedQuestion.question + "</span>" +
+			" <a href='#' class='edit'>edit</a>" +
+			" <a href='#' class='remove'>remove</a> </p></div>" +
+			" <span class='editquestion'>" + 
+			"<form class='inline-form d-none'>" +
+			"<input type='text' name='question'>" +
+			"<input type='button' class='btn btn-primary' name='cancel' value='cancel'>" +
+			"<input type='submit' class='btn btn-success' name='edit' value='edit'>" + "</form></span>"
 			$("#questionList").append(newQuestionHTML);
 				
-		/*	var $cloneDiv = $("#questionList").children().last().clone(true);
-			console.log($cloneDiv);
-			$cloneDiv.children().attr('id', addedQuestion.id);
-			$cloneDiv.attr('id', addedQuestion.id);
-			$cloneDiv.children(".questionspan #"+addedQuestion.id).text(addedQuestion.question);
-			console.log($cloneDiv);
-			$("#questionList").append($cloneDiv);
-			*/				
-			
-			/*var newDiv = $("#questionList").append("div");
-			newDiv.addClass('questiondiv').attr('id', addedQuestion.id);
-			var newP = newDiv.append("p");
-			newP.addClass('question').attr('id',addedQuestion.id);
-				
-					
-			newP.append("span").attr('id', addedQuestion.id).text(addedQuestion.question);
-			newP.append("a").addClass('edit').attr('id', addedQuestion.id).attr('href', '#').text('edit');
-			newP.append("a").addClass('remove').attr('id', addedQuestion.id).attr('href', '#').text('remove');
-			var editSpan = newDiv.append("span").addClass('editquestion').attr('id', addedQuestion.id).css('display:none');
-				
-			editSpan.append("input").attr('type','text').attr('name', 'question').attr('id', addedQuestion.id);
-			editSpan.append("input").attr('type', 'button').attr('name', 'cancel').attr('value', 'cancel').attr('id', addedQuestion.id);
-			editSpan.append("input").attr('type', 'button').attr('name', 'edit').attr('value', 'edit').attr('id', addedQuestion.id);
-			*/
 		},
 	});				
 };
