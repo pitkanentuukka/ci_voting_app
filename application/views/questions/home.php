@@ -124,16 +124,17 @@ function sendQuestion() {
 		},
 		success: function(response) {
 			addedQuestion = JSON.parse(response);
-			var newQuestionHTML = "<div class='questionDiv' id=" + addedQuestion.id + ">" + 
-			"<p class='question'>" + 
-			"<span>" + addedQuestion.question + "</span>" +
-			" <a href='#' class='edit'>edit</a>" +
-			" <a href='#' class='remove'>remove</a> </p></div>" +
-			" <span class='editquestion'>" + 
-			"<form class='inline-form d-none'>" +
-			"<input type='text' name='question'>" +
-			"<input type='button' class='btn btn-primary' name='cancel' value='cancel'>" +
-			"<input type='submit' class='btn btn-success' name='edit' value='edit'>" + "</form></span>"
+			var newQuestionHTML = "<div class='panel panel-default panel-list'>" +
+				"<div class='row'>" +
+				"<div class='questionDiv' id=" + addedQuestion.id + ">" + 
+				"<p class='question'>" + 
+				"<span>" + addedQuestion.question + "</span>" +
+				" <a href='#' class='edit'>edit</a>" +
+				" <a href='#' class='remove'>remove</a> </p></div>" +
+				"<form class='inline-form d-none'>" +
+				"<input type='text' name='question'>" +
+				"<input type='button' class='btn btn-primary' name='cancel' value='cancel'>" +
+				"<input type='submit' class='btn btn-success' name='edit' value='edit'>" + "</form></p></div></div></div>"
 			$("#questionList").append(newQuestionHTML);
 				
 		},
